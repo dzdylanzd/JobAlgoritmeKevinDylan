@@ -80,7 +80,7 @@ void JobShop::createJobs(std::vector<std::vector<unsigned short>> input)
 	for (unsigned short i = 0; i < input[0][0]; i++)
 	{
 //		job.createTasks(input[i + 1]);
-		jobList.emplace_back(i);
+		jobList.emplace_back(i,input[i + 1]);
 	}
 }
 

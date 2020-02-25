@@ -11,8 +11,13 @@
 class Task
 {
 public:
-	Task();
+	Task(unsigned short taskId, unsigned short machineId, unsigned short time);
 	virtual ~Task();
+
+private:
+	unsigned short ID;
+	unsigned short machineId;
+	unsigned short taskTime;
 };
 
 #endif /* TASK_H_ */

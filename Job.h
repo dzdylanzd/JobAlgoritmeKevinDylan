@@ -11,8 +11,11 @@
 class Job
 {
 public:
-	Job();
+	Job(unsigned short jobId);
 	virtual ~Job();
+
+private:
+	unsigned long long jobId;
 };
 
 #endif /* JOB_H_ */

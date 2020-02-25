@@ -5,12 +5,14 @@
  *      Author: dylan zweers
  */
 
+#include <iostream>
 #include "Job.h"
 
-Job::Job()
+Job::Job(unsigned short jobId)
+: jobId(jobId)
 {
 	// TODO Auto-generated constructor stub
-
+	std::cout << "job Created " << jobId << std::endl;
 }
 
 Job::~Job()

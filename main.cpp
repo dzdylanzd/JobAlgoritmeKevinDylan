@@ -6,11 +6,13 @@
  */
 
 #include <iostream>
-
+#include "JobShop.h"
 
 
 
 int main(int argc, char **argv) {
-//	ik haat kevin
 	std::cout << "ik haat jouw" << std::endl;
+
+	JobShop Kevin("tekst.txt");
+
 }

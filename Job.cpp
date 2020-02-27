@@ -33,7 +33,7 @@ void Job::createTasks(std::vector<unsigned short> &tasksValues)
 	}
 }
 
-bool Job::isIsStarted() const
+bool Job::getIsStarted() const
 {
 	return isStarted;
 }

@@ -54,3 +54,8 @@ void Task::addToRuningTime(unsigned short value)
 {
 	runningTime += value;
 }
+
+void Task::setTaskStatus(TaskStatus taskStatus)
+{
+	this->taskStatus = taskStatus;
+}

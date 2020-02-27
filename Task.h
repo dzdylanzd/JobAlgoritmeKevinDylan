@@ -25,6 +25,7 @@ public:
 	unsigned short getTaskTime() const;
 	void setTaskTime(unsigned short taskTime);
 	void addToRuningTime(unsigned short value);
+	void setTaskStatus(TaskStatus taskStatus);
 
 private:
 	unsigned short ID;

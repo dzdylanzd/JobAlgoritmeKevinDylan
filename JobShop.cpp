@@ -23,12 +23,16 @@ JobShop::JobShop(std::string inputFile) :
 	// TODO Auto-generated constructor stub
 	if(!loadFile()){
 		std::cout << "Er ging iets mis met het laden van het bestand" << std::endl;
+	}else{
+		calculateSlackTime();
+				schedule();
+				print();
 	}
 
-	for (const auto& [id, machine] : machines)
-	{
-		std::cout << id << " "<< machine.isRunning() << std::endl;
-	}
+//	for (const auto& [id, machine] : machines)
+//	{
+//		std::cout << id << " "<< machine.isRunning() << std::endl;
+//	}
 }
 
 bool JobShop::loadFile()
@@ -89,6 +93,106 @@ void JobShop::createMachines(std::vector<std::vector<unsigned short>> input)
 	{
 
 		machines.emplace(std::make_pair(i,Machine())) ;
+	}
+}
+
+void JobShop::calculateSlackTime()
+{
+	for (auto &job : jobList)
+	{
+		job.calculateTimeLeft();
+	}
+	std::sort(jobList.begin(), jobList.end(), [](Job &a, Job &b) -> bool
+	{
+		return (a.getTotalTimeLeft() > b.getTotalTimeLeft())
+		|| (a.getTotalTimeLeft() == b.getTotalTimeLeft() // als de totale tijd van a en b gelijk is, en niet gelijk aan 0:
+			&& a.getTotalTimeLeft() != 0// kleinste job id heeft voorrang
+			&& a.getJobId() < b.getJobId());
+});
+}
+
+bool JobShop::finished()
+{
+	for (auto &job : jobList)
+	{
+		if (job.getTotalTimeLeft() != 0)
+		{
+			return false;
+		}
+	}
+	return true;
+}
+
+bool JobShop::isMachineRunning(unsigned short machineId)
+{
+	return machines[machineId].isRunning();
+}
+
+void JobShop::schedule()
+{
+	while (!finished())
+	{
+		for (auto &job : jobList) // deze loop is om te checken welke taken er klaar zijn
+		{
+			if (job.getTotalTimeLeft() != 0)
+			{
+				if (job.getIsStarted())
+				{
+					job.addToTotalTime(1);
+				}
+				if (job.getFirstTask().getTaskStatus() == TaskStatus::INPROGRESS)
+				{
+					job.getFirstTask().addToRuningTime(1);
+					if (job.getFirstTask().getRunningTime()
+							== job.getFirstTask().getTaskTime())
+					{
+						machines[job.getFirstTask().getMachineId()].setRunning(false);
+						job.taskFinished();
+					}
+				}
+			}
+		}
+
+		calculateSlackTime();
+
+		for (auto &job : jobList) // deze loop is om de nieuwe taken te schedulen
+		{
+			if (job.getTotalTimeLeft() != 0)
+			{
+				if (job.getFirstTask().getTaskStatus() != TaskStatus::INPROGRESS
+						&& !isMachineRunning(job.getFirstTask().getMachineId()))
+				{
+					scheduleTask(job);
+				}
+			}
+		}
+
+		timer++;
+	}
+}
+
+void JobShop::scheduleTask(Job &job)
+{
+	if (!job.getIsStarted())
+	{
+		job.startJob();
+		job.setStartTime(timer);
+	}
+
+	machines[job.getFirstTask().getMachineId()].setRunning(true);
+	job.getFirstTask().setTaskStatus(TaskStatus::INPROGRESS);
+}
+
+void JobShop::print()
+{
+	std::sort(jobList.begin(), jobList.end(), [](Job &a, Job &b) -> bool
+	{
+		return a.getJobId() < b.getJobId();
+	});
+	for (auto &job : jobList)
+	{
+		std::cout << job.getJobId() << "  " << job.getStartTime() << "  "
+				<< job.getStartTime() + job.getTotalTime() << std::endl;
 	}
 }
 

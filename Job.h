@@ -24,7 +24,7 @@ public:
 
 	 // getters
 
-	bool isIsStarted() const;
+	bool getIsStarted() const;
 	unsigned short getJobId() const;
 	unsigned long long getTotalTime() const;
 	unsigned long long getTotalTimeLeft() const;

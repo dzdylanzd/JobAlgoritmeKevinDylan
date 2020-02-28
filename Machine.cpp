@@ -19,6 +19,7 @@ Machine::~Machine()
 Machine::Machine(const Machine &aMachine):
 running(aMachine.isRunning())
 {
+
 }
 
 bool Machine::isRunning() const

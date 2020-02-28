@@ -19,11 +19,9 @@ class Job
 public:
 	Job(unsigned short jobId,std::vector<unsigned short>& tasksValues);
 	virtual ~Job();
-	void createTasks(std::vector<unsigned short>& tasksValues);
 	void calculateTimeLeft();
 
-	 // getters
-
+	// getters
 	bool getIsStarted() const;
 	unsigned short getJobId() const;
 	unsigned long long getTotalTime() const;
@@ -45,6 +43,9 @@ private:
 	unsigned long long totalTimeLeft = 0;
 	unsigned long long startTime = 0;
 	bool isStarted = false;
+
+
+	void createTasks(std::vector<unsigned short>& tasksValues);
 };
 
 #endif /* JOB_H_ */

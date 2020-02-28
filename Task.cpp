@@ -37,11 +37,6 @@ unsigned short Task::getTaskTime() const
 	return taskTime;
 }
 
-void Task::setTaskTime(unsigned short ataskTime)
-{
-	taskTime = ataskTime;
-}
-
 void Task::addToRuningTime(unsigned short value)
 {
 	runningTime += value;

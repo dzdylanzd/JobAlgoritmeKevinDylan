@@ -14,7 +14,6 @@
 
 JobShop::~JobShop()
 {
-	// TODO Auto-generated destructor stub
 }
 
 JobShop::JobShop(std::string inputFile) :

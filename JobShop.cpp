@@ -98,7 +98,7 @@ void JobShop::createMachines(std::vector<std::vector<unsigned short>> input)
 
 void JobShop::calculateSlackTime()
 {
-	for (auto &job : jobList)
+	for (Job &job : jobList)
 	{
 		job.calculateTimeLeft();
 	}
@@ -106,14 +106,14 @@ void JobShop::calculateSlackTime()
 	{
 		return (a.getTotalTimeLeft() > b.getTotalTimeLeft())
 		|| (a.getTotalTimeLeft() == b.getTotalTimeLeft() // als de totale tijd van a en b gelijk is, en niet gelijk aan 0:
-			&& a.getTotalTimeLeft() != 0// kleinste job id heeft voorrang
+			&& a.getTotalTimeLeft() != 0// kleinste job id heeft voorrang.
 			&& a.getJobId() < b.getJobId());
 });
 }
 
 bool JobShop::finished()
 {
-	for (auto &job : jobList)
+	for (Job &job : jobList)
 	{
 		if (job.getTotalTimeLeft() != 0)
 		{
@@ -132,7 +132,7 @@ void JobShop::schedule()
 {
 	while (!finished())
 	{
-		for (auto &job : jobList) // deze loop is om te checken welke taken er klaar zijn
+		for (Job &job : jobList) // deze loop is om te checken welke taken er klaar zijn
 		{
 			if (job.getTotalTimeLeft() != 0)
 			{
@@ -155,7 +155,7 @@ void JobShop::schedule()
 
 		calculateSlackTime();
 
-		for (auto &job : jobList) // deze loop is om de nieuwe taken te schedulen
+		for (Job &job : jobList) // deze loop is om de nieuwe taken te schedulen
 		{
 			if (job.getTotalTimeLeft() != 0)
 			{
@@ -189,7 +189,7 @@ void JobShop::print()
 	{
 		return a.getJobId() < b.getJobId();
 	});
-	for (auto &job : jobList)
+	for (Job &job : jobList)
 	{
 		std::cout << job.getJobId() << "  " << job.getStartTime() << "  "
 				<< job.getStartTime() + job.getTotalTime() << std::endl;

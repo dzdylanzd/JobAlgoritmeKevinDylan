@@ -12,13 +12,11 @@ Job::Job(unsigned short jobId, std::vector<unsigned short> &tasksValues) :
 		jobId(jobId)
 {
 	createTasks(tasksValues);
-	// TODO Auto-generated constructor stub
 	std::cout << "job Created " << jobId << std::endl;
 }
 
 Job::~Job()
 {
-	// TODO Auto-generated destructor stub
 }
 
 void Job::createTasks(std::vector<unsigned short> &tasksValues)
@@ -85,6 +83,7 @@ void Job::addToTotalTime(unsigned long long amount)
 {
 	totalTime += amount;
 }
+
 
 void Job::calculateTimeLeft()
 {

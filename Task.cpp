@@ -45,9 +45,9 @@ unsigned short Task::getTaskTime() const
 	return taskTime;
 }
 
-void Task::setTaskTime(unsigned short taskTime)
+void Task::setTaskTime(unsigned short ataskTime)
 {
-	this->taskTime = taskTime;
+	taskTime = ataskTime;
 }
 
 void Task::addToRuningTime(unsigned short value)
@@ -55,7 +55,7 @@ void Task::addToRuningTime(unsigned short value)
 	runningTime += value;
 }
 
-void Task::setTaskStatus(TaskStatus taskStatus)
+void Task::setTaskStatus(TaskStatus ataskStatus)
 {
-	this->taskStatus = taskStatus;
+	taskStatus = ataskStatus;
 }

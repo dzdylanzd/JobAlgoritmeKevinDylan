@@ -30,7 +30,7 @@ bool Machine::isRunning() const
 	return running;
 }
 
-void Machine::setRunning(bool running)
+void Machine::setRunning(bool isrunning)
 {
-	this->running = running;
+	running = isrunning;
 }

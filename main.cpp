@@ -15,4 +15,8 @@ int main(int argc, char **argv) {
 
 	JobShop Kevin("tekst.txt");
 
+
+		std::cout <<  Kevin
+						<< std::endl;
+
 }

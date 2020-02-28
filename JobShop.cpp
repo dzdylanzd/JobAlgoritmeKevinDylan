@@ -29,7 +29,7 @@ JobShop::JobShop(std::string inputFile) :
 	{
 		calculateSlackTime();
 		schedule();
-		print();
+
 	}
 }
 
@@ -110,9 +110,7 @@ void JobShop::calculateSlackTime()
 	std::sort(jobList.begin(), jobList.end(), calculatePriority);
 }
 
-
-
-bool JobShop::finished()
+bool JobShop::JobsFinished()
 {
 	for (Job &job : jobList)
 	{
@@ -124,35 +122,31 @@ bool JobShop::finished()
 	return true;
 }
 
-bool JobShop::isMachineRunning(unsigned short machineId)
-{
-	return machines[machineId].isRunning();
-}
-
 void JobShop::schedule()
 {
-	while (!finished())
+	while (!JobsFinished())
 	{
-		for (Job &job : jobList) // deze loop is om te checken welke taken er klaar zijn
+		for (Job &job : jobList) // check alle jobs en add time
 		{
 			if (job.getTotalTimeLeft() != 0)
 			{
 				if (job.getIsStarted())
 				{
 					job.addToTotalTime(1);
-				}
-				if (job.getFirstTask().getTaskStatus()
-						== TaskStatus::INPROGRESS)
-				{
-					job.getFirstTask().addToRuningTime(1);
-					if (job.getFirstTask().getRunningTime()
-							== job.getFirstTask().getTaskTime())
+					if (job.getFirstTask().getTaskStatus()
+							== TaskStatus::INPROGRESS)
 					{
-						machines[job.getFirstTask().getMachineId()].setRunning(
-								false);
-						job.taskFinished();
+						job.getFirstTask().addToRuningTime(1);
+						if (job.getFirstTask().getRunningTime()
+								== job.getFirstTask().getTaskTime())
+						{
+							machines[job.getFirstTask().getMachineId()].setRunning(
+									false);
+							job.taskFinished();
+						}
 					}
 				}
+
 			}
 		}
 
@@ -163,7 +157,7 @@ void JobShop::schedule()
 			if (job.getTotalTimeLeft() != 0)
 			{
 				if (job.getFirstTask().getTaskStatus() != TaskStatus::INPROGRESS
-						&& !isMachineRunning(job.getFirstTask().getMachineId()))
+						&& !machines[job.getFirstTask().getMachineId()].isRunning())
 				{
 					scheduleTask(job);
 				}
@@ -186,16 +180,22 @@ void JobShop::scheduleTask(Job &job)
 	job.getFirstTask().setTaskStatus(TaskStatus::INPROGRESS);
 }
 
-void JobShop::print()
+std::string JobShop::getoutput()
 {
-	std::sort(jobList.begin(), jobList.end(), [](Job &a, Job &b) -> bool
-	{
-		return a.getJobId() < b.getJobId();
-	});
+	std::stringstream output;
+	std::sort(jobList.begin(), jobList.end(), [](Job &a, Job &b)
+	{	return a.getJobId() < b.getJobId();});
 	for (Job &job : jobList)
 	{
-		std::cout << job.getJobId() << "  " << job.getStartTime() << "  "
-				<< job.getStartTime() + job.getTotalTime() << std::endl;
+		output << job.getJobId() << "  " << job.getStartTime() << "  "
+				<< job.getStartTime() + job.getTotalTime() << "\n";
 	}
+
+	return output.str();
 }
 
+std::ostream& operator <<(std::ostream &os, JobShop &ajobShop)
+{
+	os << ajobShop.getoutput();
+	return os;
+}

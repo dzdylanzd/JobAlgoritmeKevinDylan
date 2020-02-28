@@ -58,6 +58,7 @@ unsigned long long Job::getStartTime() const
 
 void Job::taskFinished()
 {
+	getFirstTask().setTaskStatus(DONE);
 	if (tasks.size() > 0)
 	{
 		tasks.erase(tasks.begin());

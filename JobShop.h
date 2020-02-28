@@ -24,22 +24,28 @@ class JobShop
 public:
 	virtual ~JobShop();
 	JobShop(std::string inputFile);
+	std::string getoutput();
 
 private:
 	std::vector<Job> jobList;
 	unsigned long long timer = 0;
 	std::string inputFile;
 	std::map<unsigned short, Machine> machines;
+
+
 	void calculateSlackTime();
-	bool finished();
-	bool isMachineRunning(unsigned short machineId);
+	bool JobsFinished();
 	bool loadFile();
 	void createJobs(std::vector<std::vector<unsigned short>> input);
 	void createMachines(std::vector<std::vector<unsigned short>> input);
 	void schedule();
 	void scheduleTask(Job &job);
-	void print();
+
 
 };
+
+std::ostream& operator<<(std::ostream &os,  JobShop &ajobShop);
+
+
 
 #endif /* JOBSHOP_H_ */

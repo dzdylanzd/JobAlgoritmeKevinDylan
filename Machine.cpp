@@ -10,19 +10,15 @@
 Machine::Machine():
 running(false)
 {
-	// TODO Auto-generated constructor stub
-
 }
 
 Machine::~Machine()
 {
-	// TODO Auto-generated destructor stub
 }
 
 Machine::Machine(const Machine &aMachine):
 running(aMachine.isRunning())
 {
-
 }
 
 bool Machine::isRunning() const

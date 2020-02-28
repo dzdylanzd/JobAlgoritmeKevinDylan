@@ -133,8 +133,7 @@ void JobShop::schedule()
 				if (job.getIsStarted())
 				{
 					job.addToTotalTime(1);
-					if (job.getFirstTask().getTaskStatus()
-							== TaskStatus::INPROGRESS)
+					if (job.getFirstTask().isInProgress())
 					{
 						job.getFirstTask().addToRuningTime(1);
 						if (job.getFirstTask().getRunningTime()
@@ -156,7 +155,7 @@ void JobShop::schedule()
 		{
 			if (job.getTotalTimeLeft() != 0)
 			{
-				if (job.getFirstTask().getTaskStatus() != TaskStatus::INPROGRESS
+				if (!job.getFirstTask().isInProgress()
 						&& !machines[job.getFirstTask().getMachineId()].isRunning())
 				{
 					scheduleTask(job);
@@ -177,14 +176,13 @@ void JobShop::scheduleTask(Job &job)
 	}
 
 	machines[job.getFirstTask().getMachineId()].setRunning(true);
-	job.getFirstTask().setTaskStatus(TaskStatus::INPROGRESS);
+	job.getFirstTask().startTask();
 }
 
 std::string JobShop::getoutput()
 {
 	std::stringstream output;
-	std::sort(jobList.begin(), jobList.end(), [](Job &a, Job &b)
-	{	return a.getJobId() < b.getJobId();});
+	std::sort(jobList.begin(), jobList.end(), [](Job &a, Job &b){return a.getJobId() < b.getJobId();});
 	for (Job &job : jobList)
 	{
 		output << job.getJobId() << "  " << job.getStartTime() << "  "
@@ -194,8 +192,10 @@ std::string JobShop::getoutput()
 	return output.str();
 }
 
-std::ostream& operator <<(std::ostream &os, JobShop &ajobShop)
+
+
+std::ostream& operator <<(std::ostream &os,  JobShop &ajobShop)
 {
-	os << ajobShop.getoutput();
+     os << ajobShop.getoutput();
 	return os;
 }

@@ -13,10 +13,10 @@
 int main(int argc, char **argv) {
 
 
-	JobShop Kevin("tekst.txt");
+	JobShop Kevin("2_3_tekst.txt");
 
 
-		std::cout <<  Kevin
+		std::cout <<  Kevin.getoutput()
 						<< std::endl;
 
 }

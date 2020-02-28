@@ -11,13 +11,10 @@
 Task::Task(unsigned short taskId, unsigned short machineId, unsigned short time) :
 		ID(taskId), machineId(machineId), taskTime(time)
 {
-	// TODO Auto-generated constructor stub
-	std::cout << "task Created id: "  << ID << " machine id: "<< machineId<< " time: " << time<< " " << std::endl;
 }
 
 Task::~Task()
 {
-	// TODO Auto-generated destructor stub
 }
 
 unsigned short Task::getId() const
@@ -35,11 +32,6 @@ unsigned short Task::getRunningTime() const
 	return runningTime;
 }
 
-TaskStatus Task::getTaskStatus() const
-{
-	return taskStatus;
-}
-
 unsigned short Task::getTaskTime() const
 {
 	return taskTime;
@@ -55,7 +47,12 @@ void Task::addToRuningTime(unsigned short value)
 	runningTime += value;
 }
 
-void Task::setTaskStatus(TaskStatus ataskStatus)
+bool Task::isInProgress() const
 {
-	taskStatus = ataskStatus;
+	return inProgress;
+}
+
+void Task::startTask()
+{
+	inProgress = true;
 }

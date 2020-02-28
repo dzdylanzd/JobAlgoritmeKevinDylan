@@ -12,7 +12,6 @@ Job::Job(unsigned short jobId, std::vector<unsigned short> &tasksValues) :
 		jobId(jobId)
 {
 	createTasks(tasksValues);
-	std::cout << "job Created " << jobId << std::endl;
 }
 
 Job::~Job()
@@ -58,7 +57,6 @@ unsigned long long Job::getStartTime() const
 
 void Job::taskFinished()
 {
-	getFirstTask().setTaskStatus(DONE);
 	if (tasks.size() > 0)
 	{
 		tasks.erase(tasks.begin());
@@ -91,7 +89,7 @@ void Job::calculateTimeLeft()
 	totalTimeLeft = 0;
 	for (Task &task : tasks)
 	{
-		if (task.getTaskStatus() == TaskStatus::INPROGRESS)
+		if (task.isInProgress())
 		{
 			totalTimeLeft += (task.getTaskTime() - task.getRunningTime());
 		}

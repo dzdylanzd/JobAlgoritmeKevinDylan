@@ -20,60 +20,56 @@ JobShop::~JobShop()
 JobShop::JobShop(std::string inputFile) :
 		inputFile(inputFile)
 {
-	// TODO Auto-generated constructor stub
-	if(!loadFile()){
-		std::cout << "Er ging iets mis met het laden van het bestand" << std::endl;
-	}else{
-		calculateSlackTime();
-				schedule();
-				print();
+	if (!loadFile())
+	{
+		std::cout << "Er ging iets mis met het laden van het bestand"
+				<< std::endl;
 	}
-
-//	for (const auto& [id, machine] : machines)
-//	{
-//		std::cout << id << " "<< machine.isRunning() << std::endl;
-//	}
+	else
+	{
+		calculateSlackTime();
+		schedule();
+		print();
+	}
 }
 
 bool JobShop::loadFile()
 {
-	std::vector<std::vector<unsigned short>> input;
-	std::ifstream ifs(inputFile, std::ifstream::in);
-	if (ifs.good())
+	std::vector<std::vector<unsigned short>> FileInput;
+	std::ifstream inputFileData(inputFile, std::ifstream::in);
+	if (inputFileData.good())
 	{
-		char c;
-		std::string buffer;
-		std::vector<unsigned short> jobTasks;
-		while (ifs.good())
+		std::string characterBuffer;
+		std::vector<unsigned short> jobTasksBuffer;
+		while (inputFileData.good())
 		{
-			c = ifs.get();
-			if (c != ' ' && c != '\t' && c != '\n' && c != EOF)
+			char character = inputFileData.get();
+			if (character
+					!= ' '&& character != '\t' && character != '\n' && character != EOF)
 			{
-				if (!isdigit(c))
+				if (!isdigit(character))
+				{
 					return false;
-				buffer += c;
+				}
+				else
+				{
+					characterBuffer += character;
+				}
 			}
-			else if (buffer.size() > 0)
+			else if (characterBuffer.size() > 0)
 			{
-				jobTasks.insert(jobTasks.end(), std::stoi(buffer));
-				buffer.clear();
+				jobTasksBuffer.insert(jobTasksBuffer.end(),
+						std::stoi(characterBuffer));
+				characterBuffer.clear();
 			}
-			if (c == '\n' || c == '\0' || ifs.eof())
+			if (character == '\n' || character == '\0' || inputFileData.eof())
 			{
-				input.insert(input.end(), jobTasks);
-				jobTasks.clear();
+				FileInput.insert(FileInput.end(), jobTasksBuffer);
+				jobTasksBuffer.clear();
 			}
 		}
-		for (unsigned int i = 0; i < input.size(); ++i)
-		{
-			for (unsigned int j = 0; j < input[i].size(); ++j)
-			{
-				std::cout << input[i][j] << " ";
-			}
-			std::cout << " " << std::endl;
-		}
-		createMachines(input);
-		createJobs(input);
+		createMachines(FileInput);
+		createJobs(FileInput);
 		return true;
 	}
 	return false;
@@ -83,7 +79,7 @@ void JobShop::createJobs(std::vector<std::vector<unsigned short>> input)
 {
 	for (unsigned short i = 0; i < input[0][0]; i++)
 	{
-		jobList.emplace_back(i,input[i + 1]);
+		jobList.emplace_back(i, input[i + 1]);
 	}
 }
 
@@ -91,8 +87,7 @@ void JobShop::createMachines(std::vector<std::vector<unsigned short>> input)
 {
 	for (unsigned short i = 0; i < input[0][1]; i++)
 	{
-
-		machines.emplace(std::make_pair(i,Machine())) ;
+		machines.emplace(std::make_pair(i, Machine()));
 	}
 }
 
@@ -102,14 +97,20 @@ void JobShop::calculateSlackTime()
 	{
 		job.calculateTimeLeft();
 	}
-	std::sort(jobList.begin(), jobList.end(), [](Job &a, Job &b) -> bool
-	{
-		return (a.getTotalTimeLeft() > b.getTotalTimeLeft())
-		|| (a.getTotalTimeLeft() == b.getTotalTimeLeft() // als de totale tijd van a en b gelijk is, en niet gelijk aan 0:
-			&& a.getTotalTimeLeft() != 0// kleinste job id heeft voorrang.
-			&& a.getJobId() < b.getJobId());
-});
+
+	auto calculatePriority =
+			[](Job &a,
+					Job &b)
+					{
+						return (a.getTotalTimeLeft() > b.getTotalTimeLeft())||
+						(a.getTotalTimeLeft() == b.getTotalTimeLeft() && a.getTotalTimeLeft() != 0 && a.getJobId() < b.getJobId()
+						);
+					};
+
+	std::sort(jobList.begin(), jobList.end(), calculatePriority);
 }
+
+
 
 bool JobShop::finished()
 {
@@ -140,13 +141,15 @@ void JobShop::schedule()
 				{
 					job.addToTotalTime(1);
 				}
-				if (job.getFirstTask().getTaskStatus() == TaskStatus::INPROGRESS)
+				if (job.getFirstTask().getTaskStatus()
+						== TaskStatus::INPROGRESS)
 				{
 					job.getFirstTask().addToRuningTime(1);
 					if (job.getFirstTask().getRunningTime()
 							== job.getFirstTask().getTaskTime())
 					{
-						machines[job.getFirstTask().getMachineId()].setRunning(false);
+						machines[job.getFirstTask().getMachineId()].setRunning(
+								false);
 						job.taskFinished();
 					}
 				}

@@ -25,24 +25,21 @@ public:
 	virtual ~JobShop();
 	JobShop(std::string inputFile);
 
-	bool loadFile();
-
-	void createJobs(std::vector<std::vector<unsigned short>> input);
-
-	void createMachines(std::vector<std::vector<unsigned short>> input);
-
-	void calculateSlackTime();
-	bool finished();
-	bool isMachineRunning(unsigned short machineId);
-	void schedule();
-	void scheduleTask(Job &job);
-
-	void print();
 private:
 	std::vector<Job> jobList;
 	unsigned long long timer = 0;
 	std::string inputFile;
 	std::map<unsigned short, Machine> machines;
+	void calculateSlackTime();
+	bool finished();
+	bool isMachineRunning(unsigned short machineId);
+	bool loadFile();
+	void createJobs(std::vector<std::vector<unsigned short>> input);
+	void createMachines(std::vector<std::vector<unsigned short>> input);
+	void schedule();
+	void scheduleTask(Job &job);
+	void print();
+
 };
 
 #endif /* JOBSHOP_H_ */

@@ -11,6 +11,7 @@
 #include <cctype>
 #include <vector>
 #include <iomanip>
+#include <regex>
 
 JobShop::~JobShop()
 {
@@ -34,6 +35,10 @@ JobShop::JobShop(std::string inputFile) :
 
 bool JobShop::loadFile()
 {
+	std::smatch match;
+	std::regex regexSearchDigit("\\d+");
+	std::vector<std::string> lines;
+	std::string bufferString = "";
 	std::vector<std::vector<unsigned short>> FileInput;
 	std::ifstream inputFileData(inputFile, std::ifstream::in);
 	if (inputFileData.good())
@@ -42,39 +47,41 @@ bool JobShop::loadFile()
 		std::vector<unsigned short> jobTasksBuffer;
 		while (inputFileData.good())
 		{
-			char character = inputFileData.get();
-			if (character
-					!= ' '&& character != '\t' && character != '\n' && character != EOF)
+			char input = (char)inputFileData.get();
+			bufferString += input;
+			if (input == '\n')
 			{
-				if (!isdigit(character))
-				{
-					return false;
-				}
-				else
-				{
-					characterBuffer += character;
-				}
-			}
-			else if (characterBuffer.size() > 0)
-			{
-				jobTasksBuffer.insert(jobTasksBuffer.end(),
-						std::stoi(characterBuffer));
-				characterBuffer.clear();
-			}
-			if (character == '\n' || character == '\0' || inputFileData.eof())
-			{
-				FileInput.insert(FileInput.end(), jobTasksBuffer);
-				jobTasksBuffer.clear();
+				lines.push_back(bufferString);
+				bufferString = "";
 			}
 		}
-		createMachines(FileInput);
-		createJobs(FileInput);
-		return true;
+		lines.push_back(bufferString);
 	}
-	return false;
+	else
+	{
+		return false;
+	}
+
+	for (std::string line : lines)
+	{
+		std::vector<unsigned short> jobTasksBuffer;
+		while (std::regex_search(line, match, regexSearchDigit))
+		{
+			for (auto x : match)
+			{
+				jobTasksBuffer.push_back((unsigned short)std::stoi(x));
+			}
+			line = match.suffix().str();
+		}
+		FileInput.push_back(jobTasksBuffer);
+	}
+	createMachines(FileInput);
+	createJobs(FileInput);
+	return true;
+
 }
 
-void JobShop::createJobs(std::vector<std::vector<unsigned short>> input)
+void JobShop::createJobs(std::vector<std::vector<unsigned short>> &input)
 {
 	for (unsigned short i = 0; i < input[0][0]; i++)
 	{
@@ -82,7 +89,7 @@ void JobShop::createJobs(std::vector<std::vector<unsigned short>> input)
 	}
 }
 
-void JobShop::createMachines(std::vector<std::vector<unsigned short>> input)
+void JobShop::createMachines(std::vector<std::vector<unsigned short>> &input)
 {
 	for (unsigned short i = 0; i < input[0][1]; i++)
 	{
@@ -181,7 +188,8 @@ void JobShop::scheduleTask(Job &job)
 std::string JobShop::getoutput()
 {
 	std::stringstream output;
-	std::sort(jobList.begin(), jobList.end(), [](Job &a, Job &b){return a.getJobId() < b.getJobId();});
+	std::sort(jobList.begin(), jobList.end(), [](Job &a, Job &b)
+	{	return a.getJobId() < b.getJobId();});
 	for (Job &job : jobList)
 	{
 		output << job.getJobId() << "  " << job.getStartTime() << "  "
@@ -191,10 +199,8 @@ std::string JobShop::getoutput()
 	return output.str();
 }
 
-
-
-std::ostream& operator <<(std::ostream &os,  JobShop &ajobShop)
+std::ostream& operator <<(std::ostream &os, JobShop &ajobShop)
 {
-     os << ajobShop.getoutput();
+	os << ajobShop.getoutput();
 	return os;
 }

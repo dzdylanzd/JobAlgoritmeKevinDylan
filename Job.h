@@ -17,87 +17,102 @@
 class Job
 {
 public:
-/**
- * Constructor
- */
-	Job(unsigned short jobId,std::vector<unsigned short>& tasksValues);
 
-/**
- * Destructor
- */
+	/**
+	 * constructor
+	 * @param jobId op basis van input file
+	 * @param tasksValues  op basis van input file
+	 */
+	Job(unsigned short jobId, std::vector<unsigned short> &tasksValues);
+
+	Job(const Job &aJob);
+
+	/**
+	 * Destructor
+	 */
 	virtual ~Job();
-/**
- * Rekent tijd uit wat over is ten opzichte van de langste duur
- */
+
+	/**
+	 * Rekent tijd uit wat over is ten opzichte van alle task die running zijn of nog niet begonnnen zijn
+	 */
 	void calculateTimeLeft();
 
-	// getters
+////////////////////////getters///////////////////////////////////////////////
 
-/**
- * bool getter te kijken of de taak gestart is.
- * @return isStarted
- */
+	/**
+	 * bool getter isStarted
+	 * @return isStarted true if started false if not started
+	 */
 	bool getIsStarted() const;
-/**
- * unsigned short getter voor het id van een job.
- * @return jobId
- */
+
+	/**
+	 * unsigned short getter voor het id van een job.
+	 * @return jobId
+	 */
 	unsigned short getJobId() const;
-/**
- * unsigned long long voor het getten van de totaletijd van een job.
- * @return totalTime
- */
-	unsigned long long getTotalTime() const;
-/**
- * unsigned long long voor het getten van de totale tijd die over is.
- * @return totalTimeLeft
- */
-	unsigned long long getTotalTimeLeft() const;
-/**
- * unsigned long long voro het getten van de start tijd.
- * @return startTime
- */
-	unsigned long long getStartTime() const;
-/**
- * Task& voor het getten van de first task.
- * @return tasks.front()
- */
+
+	/**
+	 * unsigned long voor het getten van de totaletijd van de job.
+	 * @return totalTime
+	 */
+	unsigned long getTotalTime() const;
+
+	/**
+	 * unsigned long voor het getten van de totale tijd die over is van de job.
+	 * @return totalTimeLeft
+	 */
+	unsigned long getTotalTimeLeft() const;
+
+	/**
+	 * unsigned long voor het getten van de start tijd van de job.
+	 * @return startTime
+	 */
+	unsigned long getStartTime() const;
+
+	/**
+	 * Task& voor het getten van de first task.
+	 * @return tasks.front()
+	 */
 	Task& getFirstTask();
 
-
-	//setters
-/**
- * voor de taak op finished te zetten.
- */
+	//////////////////////////////setters////////////////////////////////////
+	/**
+	 * Pre job moet klaar zijn
+	 * haalt de job die klaar is uit de tasks lijst
+	 */
 	void taskFinished();
-/**
- * voor het starten van een taak.
- */
+
+	/**
+	 * Pre de job moet niet al gestart zijn
+	 * zet isStarted op true
+	 */
 	void startJob();
-/**
- * voor het zetten van de tijd
- * @param startTime
- */
-	void setStartTime(unsigned long long startTime);
-/**
- * Voor het toevoegen aan totalTime
- * @param totalTime
- */
-	void addToTotalTime(unsigned long long amount);
+
+	/**
+	 * set de startTime van de job
+	 * @param startTime unsigned long
+	 */
+	void setStartTime(unsigned long startTime);
+
+	/**
+	 * Voegt de meegegeven waarde toe aan de totale tijd
+	 * @param amount unsigned long
+	 */
+	void addToTotalTime(unsigned long amount);
 
 private:
 	unsigned short jobId;
 	std::vector<Task> tasks;
-	unsigned long long totalTime = 0;
-	unsigned long long totalTimeLeft = 0;
-	unsigned long long startTime = 0;
+	unsigned long totalTime = 0;
+	unsigned long totalTimeLeft = 0;
+	unsigned long startTime = 0;
 	bool isStarted = false;
 
-/**
- * Voor een de tasks te creeren aan de hand van de meegegeven vector.
- * @param taskValues
- */
-	void createTasks(std::vector<unsigned short>& tasksValues);
+	/**
+	 * Maakt alle task op basis van de input file.
+	 * @param taskValues
+	 */
+	void createTasks(std::vector<unsigned short> &tasksValues);
 };
 
 #endif /* JOB_H_ */

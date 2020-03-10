@@ -18,6 +18,12 @@ Job::~Job()
 {
 }
 
+Job::Job(const Job &aJob)
+:jobId(aJob.jobId),tasks(aJob.tasks),totalTime(aJob.totalTime),totalTimeLeft(aJob.totalTimeLeft),startTime(aJob.startTime),isStarted(aJob.isStarted)
+{
+
+}
+
 void Job::createTasks(std::vector<unsigned short> &tasksValues)
 {
 	unsigned short taskId = 0;
@@ -40,17 +46,17 @@ unsigned short Job::getJobId() const
 	return jobId;
 }
 
-unsigned long long Job::getTotalTime() const
+unsigned long Job::getTotalTime() const
 {
 	return totalTime;
 }
 
-unsigned long long Job::getTotalTimeLeft() const
+unsigned long Job::getTotalTimeLeft() const
 {
 	return totalTimeLeft;
 }
 
-unsigned long long Job::getStartTime() const
+unsigned long Job::getStartTime() const
 {
 	return startTime;
 }
@@ -73,12 +79,12 @@ void Job::startJob()
 	isStarted = true;
 }
 
-void Job::setStartTime(unsigned long long aStartTime)
+void Job::setStartTime(unsigned long aStartTime)
 {
 	startTime = aStartTime;
 }
 
-void Job::addToTotalTime(unsigned long long amount)
+void Job::addToTotalTime(unsigned long amount)
 {
 	totalTime += amount;
 }

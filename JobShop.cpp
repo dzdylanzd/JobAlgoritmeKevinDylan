@@ -27,7 +27,7 @@ JobShop::JobShop(std::string inputFile) :
 	}
 	else
 	{
-		calculateSlackTime();
+		calculatePrority();
 		schedule();
 
 	}
@@ -47,21 +47,15 @@ bool JobShop::loadFile()
 		std::vector<unsigned short> jobTasksBuffer;
 		while (inputFileData.good())
 		{
-			char input = (char)inputFileData.get();
-			bufferString += input;
-			if (input == '\n')
-			{
-				lines.push_back(bufferString);
-				bufferString = "";
-			}
+			std::string string;
+			std::getline(inputFileData,string);
+			lines.push_back(string);
 		}
-		lines.push_back(bufferString);
 	}
 	else
 	{
 		return false;
 	}
-
 	for (std::string line : lines)
 	{
 		std::vector<unsigned short> jobTasksBuffer;
@@ -97,7 +91,7 @@ void JobShop::createMachines(std::vector<std::vector<unsigned short>> &input)
 	}
 }
 
-void JobShop::calculateSlackTime()
+void JobShop::calculatePrority()
 {
 	for (Job &job : jobList)
 	{
@@ -155,7 +149,7 @@ void JobShop::schedule()
 			}
 		}
 
-		calculateSlackTime();
+		calculatePrority();
 
 		for (Job &job : jobList) // deze loop is om de nieuwe taken te schedulen
 		{
@@ -172,6 +166,8 @@ void JobShop::schedule()
 		timer++;
 	}
 }
+
+
 
 void JobShop::scheduleTask(Job &job)
 {

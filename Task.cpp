@@ -17,6 +17,12 @@ Task::~Task()
 {
 }
 
+Task::Task(const Task &aTask)
+:ID(aTask.ID), machineId(aTask.machineId), taskTime(aTask.taskTime),runningTime(aTask.runningTime),inProgress(aTask.inProgress)
+{
+
+}
+
 unsigned short Task::getId() const
 {
 	return ID;
@@ -37,6 +43,8 @@ unsigned short Task::getTaskTime() const
 	return taskTime;
 }
 
+
+
 void Task::addToRuningTime(unsigned short value)
 {
 	runningTime += value;
@@ -51,3 +59,5 @@ void Task::startTask()
 {
 	inProgress = true;
 }
+
+

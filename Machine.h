@@ -12,9 +12,11 @@ class Machine
 {
 public:
 /**
+ * maakt de machine aan
  * constructor
  */
 	Machine();
+
 
 /**
  * destructor
@@ -23,27 +25,23 @@ public:
 
 /**
  * copy constructor. het nieuwe object wordt geinitialiseerd op basis van het meegegeven object.
- *
  * @param aMachine
  */
 	Machine(const Machine &Machine);
 
 /**
  * Getter voor de status van de machine
- * @return true = running.
+ * @return true als hij in gebruik is false als hij niet in gebruik is.
  */
 	bool isRunning() const;
 
 /**
  * setter voor de machine op running/niet running te zetten.
- * @param true/false
+ * @param running bool
  */
 	void setRunning(bool running);
 
 private:
-/**
- * bool voor het bijhouden of de machine runt.
- */
 	bool running;
 
 };

@@ -10,15 +10,7 @@
 #include "JobShop.h"
 #include <fstream>
 
-void dump_regex_matches(const std::cmatch &match)
-{
-	std::cout << "Matches:\n";
 
-	for (std::size_t i = 0; i < match.size(); ++i)
-	{
-		std::cout << i << ": " << match.str(i) << '\n';
-	}
-}
 
 int main(int argc, char **argv)
 {

@@ -22,86 +22,79 @@
 class JobShop
 {
 public:
-/**
- * constructor
- * @param inputFile string
- */
+	/**
+	 * constructor
+	 * @param inputFile std::string de file die geimporteerd wordt
+	 */
 	JobShop(std::string inputFile);
-/**
- * Destructor
- */
+
+	/**
+	 * copy constructor
+	 * inialiseert het object op basis van het meegegeven object
+	 * @param JobShop
+	 */
+	JobShop(const JobShop &aJobShop) = delete;
+
+	/**
+	 * Destructor
+	 */
 	virtual ~JobShop();
-/**
- * functie voor het getten van een string output.
- * @return output.str()
- */
+
+	/**
+	 * haalt de output op van het minimum slack algoritme
+	 * @return output.str()
+	 */
 	std::string getoutput();
 
 private:
-/**
- * Vector waar de jobs zich in bevinden.
- */
+
 	std::vector<Job> jobList;
-
-/**
- * unsigned long long voor het bijhouden van de tijd.
- */
 	unsigned long long timer = 0;
-
-/**
- * De string die voor komt uit het invoeren van de tekst file.
- */
 	std::string inputFile;
-/**
- * De map voor de machines.
- */
 	std::map<unsigned short, Machine> machines;
 
-/**
- * methode voor het berekenen van de slacktime.
- */
-	void calculateSlackTime();
+	/**
+	 * methode voor het berekenen van de slacktime.
+	 */
+	void calculatePrority();
 
-/**
- * bool voor het aangeven of de jobs klaar zijn.
- * @return true if done.
- */
+	/**
+	 * bool voor het aangeven of de jobs klaar zijn.
+	 * @return true if done.
+	 */
 	bool JobsFinished();
 
-/**
- * functie bool voor het inladen van de file
- * @return true als file is ingeladen en heeft door kunnen lopen.
- */
+	/**
+	 * functie bool voor het inladen van de file
+	 * @return true als file is ingeladen en heeft door kunnen lopen.
+	 */
 	bool loadFile();
 
-/**
- * functie voor het creëren van de jobs.
- * @param std::vector<std::vector<unsigned short>> input
- */
+	/**
+	 * functie voor het creëren van de jobs.
+	 * @param std::vector<std::vector<unsigned short>> input
+	 */
 
-	void createJobs(std::vector<std::vector<unsigned short>>& input);
-/**
- * functie voor het creëren van de machines.
- * @param std::vector<std::vector<unsigned short>> input
- */
-	void createMachines(std::vector<std::vector<unsigned short>>& input);
+	void createJobs(std::vector<std::vector<unsigned short>> &input);
+	/**
+	 * functie voor het creëren van de machines.
+	 * @param std::vector<std::vector<unsigned short>> input
+	 */
+	void createMachines(std::vector<std::vector<unsigned short>> &input);
 
-/**
- * functie voor het uitvoeren van het algoritme.
- */
+	/**
+	 * functie voor het uitvoeren van het algoritme.
+	 */
 	void schedule();
 
-/**
- * functie voor het schedulen van nog uit te voeren taken.
- * @param job
- */
+	/**
+	 * functie voor het schedulen van nog uit te voeren taken.
+	 * @param job
+	 */
 	void scheduleTask(Job &job);
-
 
 };
 
-std::ostream& operator<<(std::ostream &os,  JobShop &ajobShop);
-
-
+std::ostream& operator<<(std::ostream &os, JobShop &ajobShop);
 
 #endif /* JOBSHOP_H_ */

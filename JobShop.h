@@ -54,40 +54,46 @@ private:
 	std::map<unsigned short, Machine> machines;
 
 	/**
-	 * methode voor het berekenen van de slacktime.
+	 * sorteerd de jobs op prioritijd op basis van TimeLeft en jobID
+	 * als 2 jobs de zelfde TimeLeft hebben heeft degene met het laagste job ID eerst
 	 */
 	void calculatePrority();
 
 	/**
-	 * bool voor het aangeven of de jobs klaar zijn.
-	 * @return true if done.
+	 * checkt of alle jobs klaar zijn.
+	 * @return true als alle jobs klaar zijn.
 	 */
 	bool JobsFinished();
 
 	/**
 	 * functie bool voor het inladen van de file
 	 * @return true als file is ingeladen en heeft door kunnen lopen.
+	 * false als er iets fout gegaan is.
 	 */
 	bool loadFile();
 
 	/**
-	 * functie voor het creëren van de jobs.
+	 * pre file moet geladen zijn
+	 * maakt de jobs op basis van de input file
 	 * @param std::vector<std::vector<unsigned short>> input
 	 */
-
 	void createJobs(std::vector<std::vector<unsigned short>> &input);
+
 	/**
-	 * functie voor het creëren van de machines.
+	 * pre file moet geladen zijn
+	 * maakt de machines op basis van de input file
 	 * @param std::vector<std::vector<unsigned short>> input
 	 */
 	void createMachines(std::vector<std::vector<unsigned short>> &input);
 
 	/**
-	 * functie voor het uitvoeren van het algoritme.
+	 * functie voor het uitvoeren van het minim slack algoritme.
 	 */
 	void schedule();
 
 	/**
+	 * pre file moet geladen zijn
+	 * pre machines,jobs en task moeten aangemaakt zijn
 	 * functie voor het schedulen van nog uit te voeren taken.
 	 * @param job
 	 */
@@ -95,6 +101,12 @@ private:
 
 };
 
+/**
+ * output opperator
+ * @param os wat er uitgeprint wordt
+ * @param ajobShop jobShop waar de informatie van geprint wordt.
+ * @return
+ */
 std::ostream& operator<<(std::ostream &os, JobShop &ajobShop);
 
 #endif /* JOBSHOP_H_ */

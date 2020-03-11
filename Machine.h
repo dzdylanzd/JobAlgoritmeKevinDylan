@@ -2,7 +2,7 @@
  * machine.h
  *
  *  Created on: 25 feb. 2020
- *      Author: dylan zweers
+ *      Author: dylan zweers & kevin selder
  */
 
 #ifndef MACHINE_H_

@@ -2,7 +2,7 @@
  * Task.h
  *
  *  Created on: 20 feb. 2020
- *      Author: Dylan Zweers
+ *      Author: dylan zweers & kevin selder
  */
 
 #ifndef TASK_H_

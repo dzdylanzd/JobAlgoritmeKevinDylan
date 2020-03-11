@@ -2,7 +2,7 @@
  * JobShop.h
  *
  *  Created on: 20 feb. 2020
- *      Author: dylan zweers
+ *      Author: dylan zweers & kevin selder
  */
 
 #ifndef JOBSHOP_H_

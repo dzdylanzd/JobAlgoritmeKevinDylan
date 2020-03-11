@@ -2,7 +2,7 @@
  * main.cpp
  *
  *  Created on: 20 feb. 2020
- *      Author: Dylan Zweers, Kevin Selder
+ *      Author: dylan zweers & kevin selder
  */
 
 #include <iostream>

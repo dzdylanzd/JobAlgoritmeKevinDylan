@@ -2,7 +2,7 @@
  * Task.cpp
  *
  *  Created on: 20 feb. 2020
- *      Author: dylan zweers
+ *      Author: dylan zweers & kevin selder
  */
 
 #include "Task.h"

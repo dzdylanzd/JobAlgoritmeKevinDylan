@@ -2,7 +2,7 @@
  * machine.cpp
  *
  *  Created on: 25 feb. 2020
- *      Author: dylan zweers
+ *      Author: dylan zweers & kevin selder
  */
 
 #include "Machine.h"

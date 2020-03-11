@@ -6,13 +6,12 @@
  */
 
 #ifndef JOB_H_
+#include "Task.h"
+#include <vector>
+#include <iostream>
 #define JOB_H_
 
-#include "Task.h"
-#include <deque>
-#include <vector>
-#include <utility>
-#include <iostream>
+
 
 class Job
 {

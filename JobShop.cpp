@@ -8,9 +8,7 @@
 #include "JobShop.h"
 #include <fstream>
 #include <iostream>
-#include <cctype>
 #include <vector>
-#include <iomanip>
 #include <regex>
 
 JobShop::~JobShop()
@@ -61,7 +59,7 @@ bool JobShop::loadFile()
 		std::vector<unsigned short> jobTasksBuffer;
 		while (std::regex_search(line, match, regexSearchDigit))
 		{
-			for (auto x : match)
+			for (std::string x : match)
 			{
 				jobTasksBuffer.push_back((unsigned short)std::stoi(x));
 			}

@@ -6,18 +6,15 @@
  */
 
 #ifndef JOBSHOP_H_
-#define JOBSHOP_H_
-
-#include <string>
-#include <algorithm>
 #include <iostream>
 #include <vector>
-#include <deque>
 #include <map>
-#include <cctype>
 #include "Job.h"
 #include "Task.h"
 #include "Machine.h"
+#define JOBSHOP_H_
+
+
 
 class JobShop
 {

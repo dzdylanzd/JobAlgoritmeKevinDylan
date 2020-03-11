@@ -11,11 +11,18 @@
 class Task
 {
 public:
-	/**
-	 * constructor
-	 */
+/**
+ * constructor
+ * @param taskId
+ * @param machineId
+ * @param time
+ */
 	Task(unsigned short taskId, unsigned short machineId, unsigned short time);
-
+/**
+ * copy constructor
+ * inialiseert het object op basis van het meegegeven object
+ * @param aTask
+ */
 	Task(const Task &aTask);
 
 	/**
@@ -56,37 +63,23 @@ public:
 
 	//settters
 	/**
+	 * pre taak is nog niet gestart.
 	 * functie voor he starten van een taak.
 	 */
 	void startTask();
 
-	/**
-	 * functie voor het toevoegen van de tijd van een taak.
-	 * @param runningTime
-	 */
+/**
+ *
+ * functie voor tijd toe tevoegen aan de variabelen runningTime
+ * @param value
+ */
 	void addToRuningTime(unsigned short value);
 
 private:
-	/**
-	 * unsigned short voor het opslaan van de task Id.
-	 */
 	unsigned short ID;
-
-	/**
-	 * unsigned short voor het opslaan van het machine id.
-	 */
 	unsigned short machineId;
-
-	/**
-	 * unsigned short voor het opslaan van de taaktijd.
-	 */
 	unsigned short taskTime;
-
-	/**
-	 * unsigned short voor het opslaan van de runtijd.
-	 */
 	unsigned short runningTime = 0;
-
 	/**
 	 * bool voor het opslaan of een taak bezig is true = bezig.
 	 */

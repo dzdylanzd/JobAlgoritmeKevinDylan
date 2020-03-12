@@ -46,7 +46,7 @@ bool JobShop::loadFile()
 		while (inputFileData.good())
 		{
 			std::string string;
-			std::getline(inputFileData,string);
+			std::getline(inputFileData, string);
 			lines.push_back(string);
 		}
 	}
@@ -61,7 +61,7 @@ bool JobShop::loadFile()
 		{
 			for (std::string x : match)
 			{
-				jobTasksBuffer.push_back((unsigned short)std::stoi(x));
+				jobTasksBuffer.push_back(static_cast<unsigned short>( std::stoi(x)));
 			}
 			line = match.suffix().str();
 		}
@@ -97,8 +97,7 @@ void JobShop::calculatePrority()
 	}
 
 	auto calculatePriority =
-			[](Job &a,
-					Job &b)
+			[](Job &a,Job &b)
 					{
 						return (a.getTotalTimeLeft() > b.getTotalTimeLeft())||
 						(a.getTotalTimeLeft() == b.getTotalTimeLeft() && a.getTotalTimeLeft() != 0 && a.getJobId() < b.getJobId()
@@ -165,8 +164,6 @@ void JobShop::schedule()
 	}
 }
 
-
-
 void JobShop::scheduleTask(Job &job)
 {
 	if (!job.getIsStarted())
@@ -182,8 +179,7 @@ void JobShop::scheduleTask(Job &job)
 std::string JobShop::getoutput()
 {
 	std::stringstream output;
-	std::sort(jobList.begin(), jobList.end(), [](Job &a, Job &b)
-	{	return a.getJobId() < b.getJobId();});
+	std::sort(jobList.begin(), jobList.end(), [](Job &a, Job &b){return a.getJobId() < b.getJobId();});
 	for (Job &job : jobList)
 	{
 		output << job.getJobId() << "  " << job.getStartTime() << "  "

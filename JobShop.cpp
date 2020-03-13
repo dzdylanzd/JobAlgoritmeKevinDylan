@@ -73,7 +73,7 @@ bool JobShop::loadFile()
 
 }
 
-void JobShop::createJobs(std::vector<std::vector<unsigned short>> &input)
+void JobShop::createJobs( std::vector<std::vector<unsigned short>> &input)
 {
 	for (unsigned short i = 0; i < input[0][0]; i++)
 	{
@@ -81,7 +81,7 @@ void JobShop::createJobs(std::vector<std::vector<unsigned short>> &input)
 	}
 }
 
-void JobShop::createMachines(std::vector<std::vector<unsigned short>> &input)
+void JobShop::createMachines(const std::vector<std::vector<unsigned short>> &input)
 {
 	for (unsigned short i = 0; i < input[0][1]; i++)
 	{
@@ -160,7 +160,7 @@ void JobShop::schedule()
 			}
 		}
 
-		timer++;
+		++timer;
 	}
 }
 

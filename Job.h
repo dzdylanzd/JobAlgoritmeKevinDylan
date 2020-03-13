@@ -22,7 +22,7 @@ public:
 	 * @param jobId op basis van input file
 	 * @param tasksValues  op basis van input file
 	 */
-	Job(unsigned short jobId, std::vector<unsigned short> &tasksValues);
+	Job(unsigned short jobId,const std::vector<unsigned short> &tasksValues);
 
 	Job(const Job &aJob);
 
@@ -111,7 +111,7 @@ private:
 	 * Maakt alle task op basis van de input file.
 	 * @param taskValues
 	 */
-	void createTasks(std::vector<unsigned short> &tasksValues);
+	void createTasks(const std::vector<unsigned short> &tasksValues);
 };
 
 #endif /* JOB_H_ */

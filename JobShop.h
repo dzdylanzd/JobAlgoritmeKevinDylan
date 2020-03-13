@@ -74,14 +74,14 @@ private:
 	 * maakt de jobs op basis van de input file
 	 * @param std::vector<std::vector<unsigned short>> input
 	 */
-	void createJobs(std::vector<std::vector<unsigned short>> &input);
+	void createJobs( std::vector<std::vector<unsigned short>> &input);
 
 	/**
 	 * pre file moet geladen zijn
 	 * maakt de machines op basis van de input file
 	 * @param std::vector<std::vector<unsigned short>> input
 	 */
-	void createMachines(std::vector<std::vector<unsigned short>> &input);
+	void createMachines(const std::vector<std::vector<unsigned short>> &input);
 
 	/**
 	 * functie voor het uitvoeren van het minim slack algoritme.

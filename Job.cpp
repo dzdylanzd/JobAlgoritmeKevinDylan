@@ -8,7 +8,7 @@
 #include <iostream>
 #include "Job.h"
 
-Job::Job(unsigned short jobId, std::vector<unsigned short> &tasksValues) :
+Job::Job(unsigned short jobId,const std::vector<unsigned short> &tasksValues) :
 		jobId(jobId)
 {
 	createTasks(tasksValues);
@@ -24,7 +24,7 @@ Job::Job(const Job &aJob)
 
 }
 
-void Job::createTasks(std::vector<unsigned short> &tasksValues)
+void Job::createTasks(const std::vector<unsigned short> &tasksValues)
 {
 	unsigned short taskId = 0;
 	for (unsigned int i = 0; i < tasksValues.size(); ++i)
@@ -97,7 +97,7 @@ void Job::calculateTimeLeft()
 	{
 		if (task.isInProgress())
 		{
-			totalTimeLeft += (task.getTaskTime() - task.getRunningTime());
+			totalTimeLeft += task.getTaskTime() - task.getRunningTime();
 		}
 		else
 		{
